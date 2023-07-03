@@ -4,9 +4,10 @@ import './index.css';
 
 
 function Square(props) {
+    const weight = props.bold ? 'bold' : '';
     return (
         <button className="square" onClick={props.onClick}>
-            {props.value}
+            <span id={weight}>{props.value}</span>
         </button>
     );
 }
@@ -17,6 +18,7 @@ class Board extends React.Component {
             <Square
                 value={this.props.squares[i]}
                 onClick={() => this.props.onClick(i)}
+                bold={this.props.bold === i}
             />
         );
     }
@@ -89,13 +91,11 @@ class Game extends React.Component {
         const winner = calculateWinner(current.squares);
 
         const moves = history.map((step, move) => {
-            console.log(step,move);
-            const row = parseInt(step.lastPosition/3);
+            const row = parseInt(step.lastPosition / 3);
             const col = step.lastPosition % 3;
             const desc = move ?
-                `Go to move ${move} (row:${row}, col:${col})`:
+                `Go to move ${move} (row:${row}, col:${col})` :
                 'Go to game start';
-                console.log(history,step,move);
             return (
                 <li key={move}>
                     <button onClick={() => this.jumpTo(move)}>{desc}</button>
@@ -116,6 +116,7 @@ class Game extends React.Component {
                     <Board
                         squares={current.squares}
                         onClick={(i) => this.handleClick(i)}
+                        bold={current.lastPosition}
                     />
                 </div>
                 <div className="game-info">
