@@ -4,7 +4,7 @@ import './index.css';
 
 
 function Square(props) {
-    const weight = props.bold ? 'bold' : '';
+    const weight = props.bold ? 'bold' : null;
     return (
         <button className="square" onClick={props.onClick}>
             <span id={weight}>{props.value}</span>
@@ -91,8 +91,8 @@ class Game extends React.Component {
         const winner = calculateWinner(current.squares);
 
         const moves = history.map((step, move) => {
-            const row = parseInt(step.lastPosition / 3);
-            const col = step.lastPosition % 3;
+            const row = parseInt(step.lastPosition / 3) + 1;
+            const col = step.lastPosition % 3 + 1;
             const desc = move ?
                 `Go to move ${move} (row:${row}, col:${col})` :
                 'Go to game start';
